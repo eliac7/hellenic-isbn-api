@@ -8,6 +8,12 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
 
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
+    upstash_redis_rest_url: str | None = Field(
+        default=None, alias="UPSTASH_REDIS_REST_URL"
+    )
+    upstash_redis_rest_token: str | None = Field(
+        default=None, alias="UPSTASH_REDIS_REST_TOKEN"
+    )
     cache_ttl_seconds: int = 3600
 
     nlg_base_url: str = "https://isbn.nlg.gr"

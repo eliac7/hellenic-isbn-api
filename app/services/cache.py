@@ -7,8 +7,13 @@ from app.config import settings
 
 try:
     from redis.asyncio import Redis
-except Exception:  # pragma: no cover - optional dependency at runtime
+except Exception:
     Redis = None  # type: ignore[assignment]
+
+try:
+    from upstash_redis import Redis as UpstashRedis
+except Exception:
+    UpstashRedis = None
 
 
 class MemoryCache:
@@ -43,13 +48,41 @@ class RedisCache:
         await self.redis_client.set(key, json.dumps(value), ex=ttl_seconds)
 
 
+class UpstashRestCache:
+    def __init__(self, redis_client: "UpstashRedis") -> None:
+        self.redis_client = redis_client
+
+    async def get(self, key: str) -> dict | None:
+        raw = self.redis_client.get(key)
+        if raw is None:
+            return None
+        if isinstance(raw, (dict, list)):
+            return raw
+        if isinstance(raw, str):
+            return json.loads(raw)
+        return None
+
+    async def set(self, key: str, value: dict, ttl_seconds: int) -> None:
+        self.redis_client.set(key, json.dumps(value), ex=ttl_seconds)
+
+
 @asynccontextmanager
-async def build_cache() -> AsyncIterator[MemoryCache | RedisCache]:
+async def build_cache() -> AsyncIterator[MemoryCache | RedisCache | UpstashRestCache]:
     if settings.redis_url and Redis is not None:
         redis_client = Redis.from_url(settings.redis_url, decode_responses=True)
         try:
             yield RedisCache(redis_client)
         finally:
             await redis_client.close()
+    elif (
+        settings.upstash_redis_rest_url
+        and settings.upstash_redis_rest_token
+        and UpstashRedis is not None
+    ):
+        upstash_client = UpstashRedis(
+            url=settings.upstash_redis_rest_url,
+            token=settings.upstash_redis_rest_token,
+        )
+        yield UpstashRestCache(upstash_client)
     else:
         yield MemoryCache()

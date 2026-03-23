@@ -6,3 +6,4 @@ beautifulsoup4
 pydantic
 pydantic-settings
 redis
+upstash-redis

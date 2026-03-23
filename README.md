@@ -83,7 +83,8 @@ docker run --rm -p 8000:8000 --env-file .env hellenic-isbn-api
 
 ## Environment variables
 
-- `REDIS_URL` (optional): If set, Redis cache is used
+- `REDIS_URL` (optional): If set, Redis (TCP) cache is used
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (optional): If both are set, Upstash REST cache is used
 - `CURL_IMPERSONATE` (default: `chrome124`)
 - `SSL_VERIFY` (default: `true`)
 - `SSL_FALLBACK_INSECURE` (default: `true`, testing only)
