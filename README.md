@@ -35,7 +35,6 @@ Response:
 
 ```json
 {
-  "source": "nlg",
   "title": "string | null",
   "authors": ["string"],
   "publisher": "string | null",
