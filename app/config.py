@@ -12,8 +12,9 @@ class Settings(BaseSettings):
 
     nlg_base_url: str = "https://isbn.nlg.gr"
     curl_impersonate: str = "chrome124"
+    ssl_verify: bool = True
+    ssl_fallback_insecure: bool = True
 
-    # Simple in-memory rate limit per process.
     rate_limit_requests: int = 60
     rate_limit_window_seconds: int = 60
 

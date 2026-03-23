@@ -48,6 +48,7 @@ Response:
 Health:
 
 - `GET /health`
+- `GET /search/title?title=<query>&details=true&details_limit=10`
 
 ## Local run
 
@@ -84,6 +85,8 @@ docker run --rm -p 8000:8000 --env-file .env hellenic-isbn-api
 
 - `REDIS_URL` (optional): If set, Redis cache is used
 - `CURL_IMPERSONATE` (default: `chrome124`)
+- `SSL_VERIFY` (default: `true`)
+- `SSL_FALLBACK_INSECURE` (default: `true`, testing only)
 - `CACHE_TTL_SECONDS` (default: `3600`)
 - `RATE_LIMIT_REQUESTS` (default: `60`)
 - `RATE_LIMIT_WINDOW_SECONDS` (default: `60`)
@@ -94,3 +97,5 @@ docker run --rm -p 8000:8000 --env-file .env hellenic-isbn-api
 - ISBN input is normalized (dashes/spaces removed).
 - NLG lookup attempts full ISBN split first, then retries with partial ISBN fragments.
 - If NLG returns no match, the API responds with `404`.
+- Title search endpoint posts to NLG search form and returns structured results.
+- For richer metadata from record pages, use `details=true` (with `details_limit` to control calls).

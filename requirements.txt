@@ -1,6 +1,7 @@
 fastapi
 uvicorn[standard]
 curl_cffi
+certifi
 beautifulsoup4
 pydantic
 pydantic-settings

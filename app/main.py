@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.routes.books import router as books_router
+from app.routes.search import router as search_router
 from app.services.cache import build_cache
 from app.services.rate_limiter import InMemoryRateLimiter
 from app.utils.logging import setup_logging
@@ -33,6 +34,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(title=settings.app_name, lifespan=lifespan)
 app.include_router(books_router)
+app.include_router(search_router)
 
 
 @app.middleware("http")
