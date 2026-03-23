@@ -68,7 +68,7 @@ class NlgService:
         picked = candidates[0]
         return BookResponse(
             title=(picked.get("title") or picked.get("original_title")),
-            authors=(picked.get("contributors") or []),  # type: ignore[arg-type]
+            authors=(picked.get("contributors") or []),
             publisher=(
                 picked.get("publisher")
                 if isinstance(picked.get("publisher"), str)
@@ -133,7 +133,9 @@ class NlgService:
             )
         except CertificateVerifyError:
             if settings.ssl_fallback_insecure:
-                logger.warning("NLG SSL verify failed. Retrying insecurely (verify=False).")
+                logger.warning(
+                    "NLG SSL verify failed. Retrying insecurely (verify=False)."
+                )
                 return await self.session.post(
                     url,
                     data=payload,
