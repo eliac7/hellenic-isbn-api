@@ -93,6 +93,16 @@ docker run --rm -p 8000:8000 --env-file .env hellenic-isbn-api
 - `RATE_LIMIT_WINDOW_SECONDS` (default: `60`)
 - `REQUEST_TIMEOUT_SECONDS` (default: `12`)
 
+## Legal and ethical use
+
+- This project is provided for educational and research purposes.
+- You are solely responsible for how you use this code and any consequences that result from its use.
+- Use this software only in compliance with applicable laws, regulations, website terms of service, and data usage policies.
+- Do not use this project to overload, stress test, disrupt, or degrade third-party services (including denial-of-service or abusive automated traffic).
+- Respect target systems and databases: keep request rates low, use caching, and avoid unnecessary repeated queries.
+- Maintain appropriate attribution and rights when storing, redistributing, or processing retrieved data.
+- The maintainers provide this project "as is", without warranties or guarantees of fitness for a particular purpose.
+
 ## Notes
 
 - ISBN input is normalized (dashes/spaces removed).
