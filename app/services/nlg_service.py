@@ -67,7 +67,6 @@ class NlgService:
 
         picked = candidates[0]
         return BookResponse(
-            source="nlg",
             title=(picked.get("title") or picked.get("original_title")),
             authors=(picked.get("contributors") or []),  # type: ignore[arg-type]
             publisher=(
